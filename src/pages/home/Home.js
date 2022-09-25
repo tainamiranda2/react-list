@@ -1,5 +1,14 @@
-import { useState,useEffect } from 'react';
-import { Table , Titulo} from './styles';
+import { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom'
+
+import {
+  Table,
+  Titulo,
+  ButtonSucces,
+  TituloC,
+  BotaoAcao,
+  ButtonInfo,
+  Container} from './styles';
 
 export const Home=()=>{
   const [data, setData] = useState([]);
@@ -19,9 +28,15 @@ export const Home=()=>{
   },[])
 
   return (
-    <div className="App">
-      <Titulo>Api com php e consumo com react</Titulo>
-      <p>Listar</p>
+    <Container>
+      <TituloC>
+        <Titulo>Listar</Titulo>
+        <BotaoAcao>
+          <Link to="cadastrar">
+          <ButtonSucces>Cadastrar</ButtonSucces></Link>
+        </BotaoAcao>
+      </TituloC>
+    
       <Table>
         <thead>
           <tr>
@@ -37,11 +52,14 @@ export const Home=()=>{
               <td>{produto.id}</td>
               <td>{produto.titulo}</td>
               <td>{produto.descricao}</td>
-              <td>Visulizar Editar Apagar</td>
+              <td>
+               <ButtonInfo> Visulizar</ButtonInfo>
+                Editar
+                Apagar</td>
             </tr>
           ))}
         </tbody>
       </Table>
-    </div>
+    </Container>
   );
 }
