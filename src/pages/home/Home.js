@@ -8,7 +8,9 @@ import {
   TituloC,
   BotaoAcao,
   ButtonInfo,
-  Container} from './styles';
+  Container,
+  ButtonWarning,
+  ButtonRed} from './styles';
 
 export const Home=()=>{
   const [data, setData] = useState([]);
@@ -22,10 +24,29 @@ export const Home=()=>{
       ));
   }
 
+  const apagar =async (idProduto) => {
+    await fetch("http://localhost/projects-php/php-api/apagar.php?id=" + idProduto)
+     /* method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body:JSON.stringify({})*/
+      .then((resp) => resp.json())
+      .then((respJson) => (
+        setData(respJson)
+      ));
+   
+    //method: "DELETE",
+    //headers: { "Content-Type":"application/json" },
+    //body:JSON.stringify({ iid})
+    
+   
+    getProdutos ();
+
+  }
   useEffect(() => {
     getProdutos ();
 
   },[])
+
 
   return (
     <Container>
@@ -53,9 +74,17 @@ export const Home=()=>{
               <td>{produto.titulo}</td>
               <td>{produto.descricao}</td>
               <td>
-               <ButtonInfo> Visulizar</ButtonInfo>
-                Editar
-                Apagar</td>
+                <ButtonInfo> Visulizar</ButtonInfo>
+
+                <Link to={"/editar/" +produto.id}>
+                  <ButtonWarning> Editar</ButtonWarning>
+                </Link>
+                <ButtonRed onClick={()=>apagar(produto.id)}>
+                  
+                Apagar
+               </ButtonRed>
+                
+              </td>
             </tr>
           ))}
         </tbody>
